@@ -2,8 +2,20 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>CONVITE DA RESENHA • CAIO</title>
+    
+    <!-- Meta tags para iOS (Imersão Total / Standalone) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Resenha Caio">
+    
+    <!-- Cor do Tema para Android -->
+    <meta name="theme-color" content="#0a0a0c">
+    
+    <!-- Manifesto inline para instalação PWA (Base64) -->
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIkNPTlZJVEUgREEgUkVTRU5IQSA8IENBSU8iLAogICJzaG9ydF9uYW1lIjogIlJlc2VuaGEiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBhMGEwYyIsCiAgInRoZW1lX2NvbG9yIjogIiNGRkM3MkMiLAogICJvcmllbnRhdGlvbiI6ICJwb3J0cmFpdC1wcmltYXJ5IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sO3V0ZjgsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxOTInIGhlaWdodD0nMTkyJyB2aWV3Qm94PScwIDAgMTkyIDE5Mic+PHJlY3Qgd2lkdGg9JzE5MicgaGVpZ2h0PScxOTInIGZpbGw9JyUyMzEzMTMxNicgcng9JzQwJy8+PHRleHQgeD0nOTYnIHk9JzExNScgZm9udC1mYW1pbHk9J3N5c3RlbS11aSwgc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9JzkwMCcgZm9udC1zaXplPSc0NScgZmlsbD0nJTIzRkZDNzJDJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJz5CT1JBPC90ZXh0Pjwvc3ZnPiIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIsCiAgICAgICJwdXJwb3NlIjogImFueSBtYXNrYWJsZSIKICAgIH0KICBdCn0=">
+
     <!-- Fontes Brutalistas e Monospace de Alto Impacto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +33,7 @@
             --font-brutal: 'Syncopate', sans-serif;
             --font-tech: 'Space Grotesque', sans-serif;
             --safe-bottom: env(safe-area-inset-bottom, 20px);
+            --safe-top: env(safe-area-inset-top, 20px);
         }
 
         * {
@@ -49,6 +62,7 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
             background-size: 100% 100%, 30px 30px, 30px 30px;
             padding: 16px;
+            padding-top: calc(16px + var(--safe-top));
             padding-bottom: calc(16px + var(--safe-bottom));
         }
 
@@ -64,6 +78,160 @@
             pointer-events: none;
         }
 
+        .pwa-banner {
+            width: 100%;
+            max-width: 360px;
+            background: rgba(19, 19, 22, 0.85);
+            border: 1px dashed var(--galo-gold);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            animation: pulseBorder 3s infinite ease-in-out;
+            z-index: 50;
+        }
+
+        .pwa-banner.hidden {
+            display: none !important;
+        }
+
+        .pwa-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .pwa-title {
+            font-family: var(--font-brutal);
+            font-size: 0.65rem;
+            color: var(--galo-gold);
+            letter-spacing: 1px;
+        }
+
+        .pwa-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .btn-pwa-install {
+            background: var(--text-light);
+            color: var(--bg-dark);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: var(--font-tech);
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .pwa-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .pwa-drawer-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .pwa-drawer {
+            width: 100%;
+            background: var(--card-black);
+            border-top: 2px solid var(--card-border);
+            border-radius: 24px 24px 0 0;
+            padding: 24px 24px calc(24px + var(--safe-bottom)) 24px;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .pwa-drawer-overlay.active .pwa-drawer {
+            transform: translateY(0);
+        }
+
+        .pwa-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .pwa-drawer-title {
+            font-family: var(--font-brutal);
+            font-size: 0.9rem;
+            color: var(--galo-gold);
+            letter-spacing: 1px;
+        }
+
+        .pwa-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .pwa-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .pwa-step {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--card-border);
+            padding: 14px;
+            border-radius: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .pwa-step-number {
+            background: var(--card-border);
+            color: var(--galo-gold);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .pwa-step-text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--text-light);
+        }
+
+        .pwa-step-text strong {
+            color: var(--galo-gold);
+        }
+
+        /* Perspective Area */
         .perspective-container {
             perspective: 1000px;
             width: 100%;
@@ -74,7 +242,6 @@
             touch-action: none;
         }
 
-        /* Card de Ingresso Mobile-First (Vertical Estilo Apple Wallet) */
         .ticket-card {
             width: 100%;
             background: var(--card-black);
@@ -309,7 +476,6 @@
             color: var(--text-muted);
         }
 
-        /* Painel de Ação Móvel (Ergonomia de Toque) */
         .controls-container {
             width: 100%;
             max-width: 360px;
@@ -464,7 +630,6 @@
             margin-bottom: 20px;
         }
 
-        /* Tela Final de Sucesso Mobile-First */
         .success-overlay {
             position: fixed;
             inset: 0;
@@ -521,9 +686,23 @@
             font-size: 0.95rem;
             margin-bottom: 30px;
         }
+
+        @keyframes pulseBorder {
+            0%, 100% { border-color: var(--galo-gold); box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+            50% { border-color: rgba(255, 199, 44, 0.3); box-shadow: 0 4px 20px rgba(255, 199, 44, 0.05); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Banner de instalação rápida para ativar Imersão Total -->
+    <div class="pwa-banner" id="pwa-banner">
+        <div class="pwa-info">
+            <span class="pwa-title">IMERSÃO TOTAL</span>
+            <span class="pwa-desc">Esconda o navegador e jogue nativo!</span>
+        </div>
+        <button class="btn-pwa-install" id="btn-pwa-show">Instalar</button>
+    </div>
 
     <!-- Container 3D para o Ticket Vertical -->
     <div class="perspective-container" id="interaction-zone">
@@ -537,6 +716,7 @@
             <!-- Parte de Cima (Ticket Corpo) -->
             <div class="ticket-main">
                 <div class="ticket-header">
+                    <!-- Palavra 'CAFÉ' alterada para 'ROLÉ' com alta energia de resenha -->
                     <div class="brand-badge">ROLÉ &amp; RESENHA</div>
                     <div class="ticket-type">CONVOCAÇÃO RÁPIDA</div>
                 </div>
@@ -549,6 +729,7 @@
                 <div class="ticket-meta-grid">
                     <div class="meta-item">
                         <span class="meta-label">SEU PRÓXIMO PASSO</span>
+                        <!-- Palavra 'CAFÉ' alterada para 'ROLÉ' na instrução do card -->
                         <span class="meta-value gold">CONFIRMAR O ROLÉ</span>
                     </div>
                     <div class="meta-item">
@@ -600,9 +781,34 @@
             <div class="success-badge">ENCONTRO ACERTADO</div>
             <h2>Fechado <span>sem desculpas!</span></h2>
             <p>
-                Pronto! A convocação foi aceita com sucesso. Como você confirmou aqui na minha frente, o aperto de mão virtual está registrado. Já pode olhar de volta para mim para acertarmos o combinado do nosso rolê. 🤝
+                <!-- Palavra 'café' alterada para 'rolê' na conclusão com o aperto de mão -->
+                Pronto! A convocação foi aceita com sucesso. Como você confirmou aqui na minha frente, o aperto de mão virtual está registrado. Já pode olhar de volta para mim para acertarmos o horário do nosso rolê. 🤝
             </p>
             <div class="brand-badge" style="display: inline-block;">O ACORDO FOI SELADO NA MESA.</div>
+        </div>
+    </div>
+
+    <!-- Gaveta de guia de instalação PWA (iOS/Android) -->
+    <div class="pwa-drawer-overlay" id="pwa-drawer-overlay">
+        <div class="pwa-drawer">
+            <div class="pwa-drawer-header">
+                <span class="pwa-drawer-title">Como ativar imersão total</span>
+                <button class="pwa-close-btn" id="btn-pwa-close">&times;</button>
+            </div>
+            <div class="pwa-steps">
+                <div class="pwa-step" id="pwa-step-ios">
+                    <div class="pwa-step-number">1</div>
+                    <div class="pwa-step-text">No iPhone/Safari, toque no botão de <strong>Compartilhar</strong> (ícone com quadrado e seta para cima).</div>
+                </div>
+                <div class="pwa-step" id="pwa-step-ios-add">
+                    <div class="pwa-step-number">2</div>
+                    <div class="pwa-step-text">Role a lista para baixo e clique em <strong>Adicionar à Tela de Início</strong>. Pronto, abra por lá para ver sem bordas de navegador!</div>
+                </div>
+                <div class="pwa-step" id="pwa-step-android">
+                    <div class="pwa-step-number">1</div>
+                    <div class="pwa-step-text">No Android/Chrome, clique no botão de <strong>Mais opções (⋮)</strong> ou clique no botão do navegador "Instalar aplicativo".</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -678,6 +884,47 @@
             setTimeout(() => {
                 successScreen.classList.add('active');
             }, 300);
+        });
+
+        // Lógica PWA e Modo Standalone
+        const pwaBanner = document.getElementById('pwa-banner');
+        const pwaDrawerOverlay = document.getElementById('pwa-drawer-overlay');
+        const btnPwaShow = document.getElementById('btn-pwa-show');
+        const btnPwaClose = document.getElementById('btn-pwa-close');
+
+        // Detecta se já está rodando em modo imersivo (App Instalado)
+        const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+        if (isStandalone) {
+            // Se já for PWA standalone, esconde o banner para imersão limpa total
+            pwaBanner.classList.add('hidden');
+        }
+
+        // Exibe o passo a passo de acordo com o sistema operacional
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const iosStep = document.getElementById('pwa-step-ios');
+        const iosAddStep = document.getElementById('pwa-step-ios-add');
+        const androidStep = document.getElementById('pwa-step-android');
+
+        if (isIOS) {
+            androidStep.style.display = 'none';
+        } else {
+            iosStep.style.display = 'none';
+            iosAddStep.style.display = 'none';
+        }
+
+        btnPwaShow.addEventListener('click', () => {
+            pwaDrawerOverlay.classList.add('active');
+        });
+
+        btnPwaClose.addEventListener('click', () => {
+            pwaDrawerOverlay.classList.remove('active');
+        });
+
+        pwaDrawerOverlay.addEventListener('click', (e) => {
+            if (e.target === pwaDrawerOverlay) {
+                pwaDrawerOverlay.classList.remove('active');
+            }
         });
     </script>
 </body>
