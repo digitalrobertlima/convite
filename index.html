@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade de Cenário</title>
+    <!-- Fonts Premium -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --accent-bronze: #c5a880;
+            --accent-olive: #5f6d5e;
+            --text-primary: #f4f4f4;
+            --text-muted: #8a8a8a;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(197, 168, 128, 0.15);
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none; /* Custom cursor para elevar a experiência */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(95, 109, 94, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(197, 168, 128, 0.08) 0%, transparent 50%);
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-bronze);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        #custom-cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--accent-bronze);
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.08s ease-out;
+        }
+
+        /* Container Principal */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Minimalista */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--accent-bronze);
+        }
+
+        .status {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-olive);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-olive);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin: 6rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin: 3rem 0;
+            }
+        }
+
+        .hero-text h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-text h1 span {
+            font-style: italic;
+            color: var(--accent-bronze);
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 480px;
+            margin-bottom: 2rem;
+        }
+
+        /* Moodboard / Mockup 3D Frame */
+        .preview-container {
+            position: relative;
+            aspect-ratio: 4/5;
+            background: #161616;
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        /* Elemento de Wireframe Estrutural */
+        .spatial-wireframe {
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            opacity: 0.15;
+            background-image: 
+                linear-gradient(rgba(197, 168, 128, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(197, 168, 128, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            transform: perspective(500px) rotateX(60deg) translateY(-20px);
+            transition: transform 0.5s ease;
+        }
+
+        .preview-container:hover .spatial-wireframe {
+            transform: perspective(500px) rotateX(55deg) translateY(-10px) scale(1.05);
+        }
+
+        .card-ambient {
+            position: relative;
+            z-index: 2;
+            width: 70%;
+            padding: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2px;
+            text-align: center;
+        }
+
+        .card-ambient h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .card-ambient .detail {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--accent-bronze);
+            text-transform: uppercase;
+            margin-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1rem;
+        }
+
+        /* Painel de Ação (A estratégia de decisão) */
+        .action-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 4px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            margin-top: 2rem;
+        }
+
+        .action-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .action-header h2 {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-header p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            min-height: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Botão Primário (Aceitar) - Magnético & Sofisticado */
+        .btn-premium {
+            background: transparent;
+            border: 1px solid var(--accent-bronze);
+            color: var(--text-primary);
+            padding: 1.2rem 2.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            outline: none;
+        }
+
+        .btn-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-bronze);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .btn-premium:hover {
+            color: #0d0d0d;
+            box-shadow: 0 10px 30px rgba(197, 168, 128, 0.25);
+        }
+
+        .btn-premium:hover::before {
+            left: 0;
+        }
+
+        /* Botão Secundário (Não) - O Desvio Psicológico */
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            padding: 1.2rem 2.5rem;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text-primary);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Modal de Sucesso */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #080808;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .success-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+            transform: translateY(30px);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .success-overlay.active .success-content {
+            transform: translateY(0);
+        }
+
+        .success-content h2 {
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--accent-bronze);
+            margin-bottom: 1.5rem;
+        }
+
+        .success-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+        }
+
+        .success-detail {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-olive);
+            border-top: 1px solid var(--glass-border);
+            padding-top: 1.5rem;
+        }
+
+        /* Animações */
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+
+    <main>
+        <!-- Header -->
+        <header>
+            <div class="logo">R & C</div>
+            <div class="status">Cenário Otimizado</div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Uma quebra na <span>rotina</span> usual.</h1>
+                <p>Nossos almoços diários são ótimos para o fluxo corrido de trabalho. Mas a boa conversa merece uma acústica melhor, luz desenhada e um ritmo sem pressa.</p>
+                <p>Este não é um convite comum. É um convite para elevarmos o nível de intercâmbio de ideias fora da atmosfera padrão.</p>
+            </div>
+            
+            <div class="preview-container" id="card-trigger">
+                <div class="spatial-wireframe"></div>
+                <div class="card-ambient">
+                    <h3>Ponto de Encontro</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Um ambiente com curadoria de iluminação, café excepcional ou drinks artesanais sob medida.</p>
+                    <div class="detail">Upgrade Espacial</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Painel de Ação Estratégica -->
+        <section class="action-panel">
+            <div class="action-header">
+                <h2>Selecione o Próximo Passo</h2>
+                <p>A probabilidade de um diálogo excelente está estimada em 98.4%.</p>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-premium" id="btn-accept">Aceitar Upgrade</button>
+                <button class="btn-secondary" id="btn-decline">Manter Status Quo</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Screen (Overlay) -->
+    <div class="success-overlay" id="success-screen">
+        <div class="success-content">
+            <h2>Decisão Excelente.</h2>
+            <p>O fluxo foi alterado com sucesso. Vou escolher um local com uma atmosfera impecável, materiais autênticos e café de verdade. Detalhes de logística e horário serão enviados em breve.</p>
+            <div class="success-detail">Nos vemos além do restaurante de sempre.</div>
+        </div>
+    </div>
+
+    <!-- JavaScript para Interações Fluidas -->
+    <script>
+        // Custom Cursor Motion
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('custom-cursor-follower');
+        const buttons = document.querySelectorAll('button, #card-trigger');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            // Suavização do seguidor do cursor
+            setTimeout(() => {
+                follower.style.left = e.clientX + 'px';
+                follower.style.top = e.clientY + 'px';
+            }, 50);
+        });
+
+        // Hover states no cursor para dar feedback de peso
+        buttons.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+                cursor.style.background = 'var(--accent-olive)';
+                follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                follower.style.borderColor = 'var(--accent-olive)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.background = 'var(--accent-bronze)';
+                follower.style.transform = 'translate(-50%, -50%) scale(1)';
+                follower.style.borderColor = 'var(--accent-bronze)';
+            });
+        });
+
+        // A MÁGICA: Evitar a recusa com psicologia sutil e micro-interação elegante
+        const btnDecline = document.getElementById('btn-decline');
+        const btnAccept = document.getElementById('btn-accept');
+        let attempts = 0;
+
+        const dynamicTexts = [
+            "Tem certeza?",
+            "Acústica ruim lá...",
+            "Opção temporariamente indisponível.",
+            "Erro 418: Sistema prefere café.",
+            "Tente o outro botão."
+        ];
+
+        btnDecline.addEventListener('mouseover', () => {
+            if (attempts < dynamicTexts.length) {
+                // Em vez de "correr" de forma boba, o botão de declínio elegantemente 
+                // se autodeprecia e esmaece, enquanto o botão principal pulsa.
+                btnDecline.textContent = dynamicTexts[attempts];
+                btnDecline.style.opacity = (1 - (attempts * 0.2)); // Vai sumindo gradualmente
+                
+                // Fortalece o botão de aceitar
+                btnAccept.style.transform = `scale(${1 + (attempts * 0.05)})`;
+                btnAccept.style.boxShadow = `0 10px 30px rgba(197, 168, 128, ${0.25 + (attempts * 0.1)})`;
+                
+                attempts++;
+            } else {
+                // Se ele persistir, o botão de recusa simplesmente some, impossibilitando a ação
+                btnDecline.style.display = 'none';
+            }
+        });
+
+        // Evento de Sucesso
+        const successScreen = document.getElementById('success-screen');
+        btnAccept.addEventListener('click', () => {
+            successScreen.classList.add('active');
+        });
+    </script>
+</body>
+</html>
