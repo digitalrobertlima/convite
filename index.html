@@ -3,328 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upgrade de Cenário</title>
-    <!-- Fonts Premium -->
+    <title>CONVOCAÇÃO VIP • CAIO</title>
+    <!-- Fontes Brutalistas e Monospace de Alto Impacto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesque:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-color: #0d0d0d;
-            --accent-bronze: #c5a880;
-            --accent-olive: #5f6d5e;
-            --text-primary: #f4f4f4;
-            --text-muted: #8a8a8a;
-            --glass-bg: rgba(20, 20, 20, 0.6);
-            --glass-border: rgba(197, 168, 128, 0.15);
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --bg-dark: #070708;
+            --card-black: #121214;
+            --card-border: #27272a;
+            --galo-gold: #FFC72C; /* Amarelo Ouro Oficial do Galo */
+            --glow-gold: rgba(255, 199, 44, 0.35);
+            --text-light: #f4f4f5;
+            --text-muted: #71717a;
+            --font-brutal: 'Syncopate', sans-serif;
+            --font-tech: 'Space Grotesque', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Custom cursor para elevar a experiência */
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: var(--font-sans);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: var(--font-tech);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(95, 109, 94, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(197, 168, 128, 0.08) 0%, transparent 50%);
+                radial-gradient(circle at 50% -20%, rgba(255, 199, 44, 0.12) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            padding: 20px;
         }
 
-        /* Custom Cursor */
-        #custom-cursor {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-bronze);
-            border-radius: 50%;
+        /* Scanline / Grid overlay para textura de estádio */
+        body::before {
+            content: " ";
+            display: block;
             position: fixed;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 999;
+            background-size: 100% 4px, 6px 100%;
             pointer-events: none;
-            z-index: 9999;
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
 
-        #custom-cursor-follower {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--accent-bronze);
+        /* Container 3D para o Ticket */
+        .perspective-container {
+            perspective: 1200px;
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        /* Estrutura do Ingresso VIP */
+        .ticket-card {
+            width: 100%;
+            background: var(--card-black);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 199, 44, 0.05);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .ticket-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 199, 44, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        /* Divisória Serrilhada de Bilheteria Real */
+        .ticket-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 68.7%;
+            width: 2px;
+            background-image: linear-gradient(to bottom, var(--card-border) 60%, transparent 40%);
+            background-size: 2px 15px;
+            z-index: 4;
+        }
+
+        .ticket-divider::before, .ticket-divider::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--bg-dark);
+            border: 1px solid var(--card-border);
             border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9998;
-            transition: transform 0.08s ease-out;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
         }
 
-        /* Container Principal */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            min-height: 100vh;
+        .ticket-divider::before { top: -13px; }
+        .ticket-divider::after { bottom: -13px; }
+
+        /* Lado Esquerdo - Corpo Principal */
+        .ticket-main {
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-        }
-
-        /* Header Minimalista */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 1.5rem;
-        }
-
-        .logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: var(--accent-bronze);
-        }
-
-        .status {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent-olive);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status::before {
-            content: '';
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: var(--accent-olive);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        /* Hero Section */
-        .hero {
-            margin: 6rem 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-                margin: 3rem 0;
-            }
-        }
-
-        .hero-text h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(3rem, 6vw, 4.5rem);
-            font-weight: 300;
-            line-height: 1.1;
-            margin-bottom: 2rem;
-        }
-
-        .hero-text h1 span {
-            font-style: italic;
-            color: var(--accent-bronze);
-        }
-
-        .hero-text p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.8;
-            max-width: 480px;
-            margin-bottom: 2rem;
-        }
-
-        /* Moodboard / Mockup 3D Frame */
-        .preview-container {
-            position: relative;
-            aspect-ratio: 4/5;
-            background: #161616;
-            border: 1px solid var(--glass-border);
-            border-radius: 4px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-        }
-
-        /* Elemento de Wireframe Estrutural */
-        .spatial-wireframe {
-            position: absolute;
-            width: 80%;
-            height: 80%;
-            opacity: 0.15;
-            background-image: 
-                linear-gradient(rgba(197, 168, 128, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(197, 168, 128, 0.3) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-position: center;
-            transform: perspective(500px) rotateX(60deg) translateY(-20px);
-            transition: transform 0.5s ease;
-        }
-
-        .preview-container:hover .spatial-wireframe {
-            transform: perspective(500px) rotateX(55deg) translateY(-10px) scale(1.05);
-        }
-
-        .card-ambient {
             position: relative;
             z-index: 2;
-            width: 70%;
-            padding: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 2px;
-            text-align: center;
         }
 
-        .card-ambient h3 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            font-weight: 300;
-        }
-
-        .card-ambient .detail {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            color: var(--accent-bronze);
-            text-transform: uppercase;
-            margin-top: 1.5rem;
-            border-top: 1px solid var(--glass-border);
-            padding-top: 1rem;
-        }
-
-        /* Painel de Ação (A estratégia de decisão) */
-        .action-panel {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 3rem;
-            border-radius: 4px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            margin-top: 2rem;
-        }
-
-        .action-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .action-header h2 {
-            font-family: var(--font-serif);
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-        }
-
-        .action-header p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        .button-group {
+        .ticket-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .brand-badge {
+            font-family: var(--font-brutal);
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: var(--text-light);
+            background: #1a1a1e;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #2e2e33;
+        }
+
+        .ticket-type {
+            font-family: var(--font-brutal);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--galo-gold);
+            text-shadow: 0 0 10px var(--glow-gold);
+            display: flex;
             align-items: center;
-            gap: 3rem;
-            position: relative;
-            min-height: 80px;
+            gap: 6px;
         }
 
-        @media (max-width: 768px) {
-            .button-group {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
+        .ticket-type::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--galo-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--galo-gold);
         }
 
-        /* Botão Primário (Aceitar) - Magnético & Sofisticado */
-        .btn-premium {
-            background: transparent;
-            border: 1px solid var(--accent-bronze);
-            color: var(--text-primary);
-            padding: 1.2rem 2.5rem;
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 3px;
+        .ticket-title {
+            margin: 20px 0;
+        }
+
+        .ticket-title h1 {
+            font-family: var(--font-brutal);
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            line-height: 1.05;
+            color: var(--text-light);
             text-transform: uppercase;
+        }
+
+        .ticket-title h1 span {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text-light);
+        }
+
+        .ticket-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            margin-top: 20px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .meta-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .meta-value.gold {
+            color: var(--galo-gold);
+        }
+
+        /* Lado Direito - Stub / Bilhete de Validação */
+        .ticket-stub {
+            background: #151518;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Elemento Holográfico de Segurança */
+        .holo-shield {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #111 0%, #222 50%, #111 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
         }
 
-        .btn-premium::before {
+        .holo-shield::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--accent-bronze);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: -1;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 199, 44, 0) 20%, 
+                rgba(255, 199, 44, 0.4) 40%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 199, 44, 0) 70%
+            );
+            background-size: 200% 200%;
+            background-position: var(--hx, 50%) var(--hy, 50%);
+            mix-blend-mode: color-dodge;
+            pointer-events: none;
+            transition: background-position 0.1s ease;
         }
 
-        .btn-premium:hover {
-            color: #0d0d0d;
-            box-shadow: 0 10px 30px rgba(197, 168, 128, 0.25);
+        .holo-logo {
+            font-family: var(--font-brutal);
+            font-size: 1.1rem;
+            color: var(--text-light);
+            z-index: 2;
+            letter-spacing: -1px;
         }
 
-        .btn-premium:hover::before {
-            left: 0;
+        .barcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
         }
 
-        /* Botão Secundário (Não) - O Desvio Psicológico */
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid transparent;
+        .barcode {
+            width: 120px;
+            height: 50px;
+            opacity: 0.85;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--text-light),
+                var(--text-light) 2px,
+                transparent 2px,
+                transparent 6px,
+                var(--text-light) 6px,
+                var(--text-light) 10px,
+                transparent 10px,
+                transparent 12px
+            );
+        }
+
+        .barcode-num {
+            font-family: monospace;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             color: var(--text-muted);
-            padding: 1.2rem 2.5rem;
-            font-family: var(--font-sans);
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+        }
+
+        /* Painel de Controle e Botões Brutalistas */
+        .controls-container {
+            width: 100%;
+            max-width: 850px;
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 20px;
+            font-family: var(--font-brutal);
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            transition: all 0.3s ease;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .btn-secondary:hover {
-            color: var(--text-primary);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+        /* Botão Confirmar (Amarelo / Preto) */
+        .btn-confirm {
+            background: var(--text-light);
+            color: var(--bg-dark);
+            border-color: var(--text-light);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
         }
 
-        /* Modal de Sucesso */
+        .btn-confirm::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-confirm:hover {
+            background: var(--galo-gold);
+            border-color: var(--galo-gold);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px var(--glow-gold);
+        }
+
+        .btn-confirm:hover::after {
+            left: 100%;
+        }
+
+        /* Botão VAR (Recusar) */
+        .btn-var {
+            background: transparent;
+            color: var(--text-muted);
+            border-color: var(--card-border);
+        }
+
+        .btn-var:hover {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.4);
+            background: rgba(239, 68, 68, 0.03);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+
+        /* VAR OVERLAY (Simulação de Revisão de Campo) */
+        .var-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 7, 8, 0.98);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .var-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .var-box {
+            border: 2px solid var(--galo-gold);
+            background: #0f0f11;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px var(--glow-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Grid de Câmera de Linhas Táticas */
+        .var-screen {
+            position: relative;
+            background: #16161a;
+            border: 1px solid #2e2e33;
+            aspect-ratio: 16/9;
+            margin-bottom: 25px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .var-tactical-lines {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 199, 44, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 199, 44, 0.3) 1px, transparent 1px);
+            background-size: 30px 30px;
+            background-position: center;
+            transform: rotateX(45deg);
+            opacity: 0.2;
+        }
+
+        .var-target {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed #ef4444;
+            border-radius: 50%;
+            position: relative;
+            animation: rotateTarget 10s linear infinite;
+        }
+
+        .var-target::before {
+            content: 'LANCE CRÍTICO';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-tech);
+            font-size: 0.55rem;
+            color: #ef4444;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        @keyframes rotateTarget {
+            100% { transform: rotate(360deg); }
+        }
+
+        .var-status {
+            font-family: var(--font-brutal);
+            font-size: 1.5rem;
+            color: var(--galo-gold);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .var-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Tela de Confirmação Final de Sucesso */
         .success-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #080808;
-            z-index: 10000;
+            inset: 0;
+            background: #000;
+            z-index: 2000;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             opacity: 0;
@@ -337,173 +498,201 @@
             pointer-events: all;
         }
 
-        .success-content {
+        .success-card {
             text-align: center;
             max-width: 600px;
-            padding: 2rem;
-            transform: translateY(30px);
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 40px;
         }
 
-        .success-overlay.active .success-content {
-            transform: translateY(0);
-        }
-
-        .success-content h2 {
-            font-family: var(--font-serif);
-            font-size: 4rem;
-            font-weight: 300;
-            color: var(--accent-bronze);
-            margin-bottom: 1.5rem;
-        }
-
-        .success-content p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-        }
-
-        .success-detail {
-            font-size: 0.75rem;
-            text-transform: uppercase;
+        .success-badge {
+            font-family: var(--font-brutal);
+            font-size: 0.8rem;
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 8px 16px;
+            border-radius: 99px;
+            display: inline-block;
+            margin-bottom: 30px;
             letter-spacing: 3px;
-            color: var(--accent-olive);
-            border-top: 1px solid var(--glass-border);
-            padding-top: 1.5rem;
         }
 
-        /* Animações */
-        @keyframes pulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 1; }
-            100% { opacity: 0.4; }
+        .success-card h2 {
+            font-family: var(--font-brutal);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            line-height: 1.1;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .success-card h2 span {
+            color: var(--galo-gold);
+        }
+
+        .success-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 40px;
+        }
+
+        /* Responsividade Extrema */
+        @media (max-width: 768px) {
+            .ticket-card {
+                grid-template-columns: 1fr;
+            }
+            .ticket-divider {
+                display: none;
+            }
+            .ticket-stub {
+                border-top: 1px dashed var(--card-border);
+                padding: 30px;
+            }
+            .controls-container {
+                flex-direction: column;
+                gap: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div id="custom-cursor"></div>
-    <div id="custom-cursor-follower"></div>
-
-    <main>
-        <!-- Header -->
-        <header>
-            <div class="logo">R & C</div>
-            <div class="status">Cenário Otimizado</div>
-        </header>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-text">
-                <h1>Uma quebra na <span>rotina</span> usual.</h1>
-                <p>Nossos almoços diários são ótimos para o fluxo corrido de trabalho. Mas a boa conversa merece uma acústica melhor, luz desenhada e um ritmo sem pressa.</p>
-                <p>Este não é um convite comum. É um convite para elevarmos o nível de intercâmbio de ideias fora da atmosfera padrão.</p>
-            </div>
+    <div class="perspective-container">
+        <!-- Ticket Premium -->
+        <div class="ticket-card" id="ticket">
             
-            <div class="preview-container" id="card-trigger">
-                <div class="spatial-wireframe"></div>
-                <div class="card-ambient">
-                    <h3>Ponto de Encontro</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Um ambiente com curadoria de iluminação, café excepcional ou drinks artesanais sob medida.</p>
-                    <div class="detail">Upgrade Espacial</div>
+            <!-- Corpo Principal -->
+            <div class="ticket-main">
+                <div class="ticket-header">
+                    <div class="brand-badge">R-SYSTEM DE ANTENAS</div>
+                    <div class="ticket-type">CONVOCAÇÃO EXTRAORDINÁRIA</div>
+                </div>
+
+                <div class="ticket-title">
+                    <h1>Sócio Especial <span>Caio</span></h1>
+                </div>
+
+                <div class="ticket-meta-grid">
+                    <div class="meta-item">
+                        <span class="meta-label">SETOR</span>
+                        <span class="meta-value gold">CAMAROTE / RESENHA</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">CÓDIGO</span>
+                        <span class="meta-value">#GALO-013-VIP</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">PORTÃO</span>
+                        <span class="meta-value">LIBERADO</span>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Painel de Ação Estratégica -->
-        <section class="action-panel">
-            <div class="action-header">
-                <h2>Selecione o Próximo Passo</h2>
-                <p>A probabilidade de um diálogo excelente está estimada em 98.4%.</p>
-            </div>
-            
-            <div class="button-group">
-                <button class="btn-premium" id="btn-accept">Aceitar Upgrade</button>
-                <button class="btn-secondary" id="btn-decline">Manter Status Quo</button>
-            </div>
-        </section>
-    </main>
+            <!-- Divisória Física Serrilhada -->
+            <div class="ticket-divider"></div>
 
-    <!-- Success Screen (Overlay) -->
-    <div class="success-overlay" id="success-screen">
-        <div class="success-content">
-            <h2>Decisão Excelente.</h2>
-            <p>O fluxo foi alterado com sucesso. Vou escolher um local com uma atmosfera impecável, materiais autênticos e café de verdade. Detalhes de logística e horário serão enviados em breve.</p>
-            <div class="success-detail">Nos vemos além do restaurante de sempre.</div>
+            <!-- Stub / Canhoto -->
+            <div class="ticket-stub">
+                <div class="holo-shield" id="holo-badge">
+                    <span class="holo-logo">VIP</span>
+                </div>
+                
+                <div class="barcode-container">
+                    <div class="barcode"></div>
+                    <span class="barcode-num">09 13 418 2026</span>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <!-- JavaScript para Interações Fluidas -->
+    <!-- Botões Interativos -->
+    <div class="controls-container">
+        <button class="btn btn-confirm" id="btn-accept">Confirmar Escalação</button>
+        <button class="btn btn-var" id="btn-trigger-var">Pedir VAR</button>
+    </div>
+
+    <!-- VAR Interface Modal -->
+    <div class="var-overlay" id="var-modal">
+        <div class="var-box">
+            <div class="var-screen">
+                <div class="var-tactical-lines"></div>
+                <div class="var-target"></div>
+            </div>
+            <div class="var-status">REVISANDO JOGADA...</div>
+            <div class="var-desc">
+                Análise tática em andamento. O comitê de arbitragem identificou que recusar uma resenha pós-jogo viola a regra número 1 do manual da arquibancada: <strong>"Papo bom não se evita."</strong>
+            </div>
+            <button class="btn btn-confirm" id="btn-var-confirm" style="width: 100%;">Anular Recusa & Confirmar</button>
+        </div>
+    </div>
+
+    <!-- Tela Final de Sucesso (VIP Room Match) -->
+    <div class="success-overlay" id="success-screen">
+        <div class="success-card">
+            <div class="success-badge">INGRESSO EMITIDO</div>
+            <h2>Escalação <span>Confirmada!</span></h2>
+            <p>
+                A convocação foi aceita. O fluxo estratégico foi atualizado. Nosso próximo pós-expediente está agendado e reservado. Vou organizar os detalhes técnicos para que seja uma resenha de gala. Nos vemos lá.
+            </p>
+            <div class="brand-badge" style="display: inline-block;">NÃO É APENAS JOGO. É RITUAL.</div>
+        </div>
+    </div>
+
     <script>
-        // Custom Cursor Motion
-        const cursor = document.getElementById('custom-cursor');
-        const follower = document.getElementById('custom-cursor-follower');
-        const buttons = document.querySelectorAll('button, #card-trigger');
+        const ticket = document.getElementById('ticket');
+        const container = document.querySelector('.perspective-container');
+        const holoBadge = document.getElementById('holo-badge');
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        // Efeito de Rotação 3D do Ticket Dinâmico (Efeito Parallax Física Real)
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
             
-            // Suavização do seguidor do cursor
-            setTimeout(() => {
-                follower.style.left = e.clientX + 'px';
-                follower.style.top = e.clientY + 'px';
-            }, 50);
+            const rotateX = -(y / (rect.height / 2)) * 14; 
+            const rotateY = (x / (rect.width / 2)) * 14;
+
+            ticket.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Variáveis CSS de coordenadas do mouse para o background shimmer
+            ticket.style.setProperty('--mx', `${(e.clientX - rect.left)}px`);
+            ticket.style.setProperty('--my', `${(e.clientY - rect.top)}px`);
+
+            // Mover o reflexo holográfico
+            const hx = 50 + (x / (rect.width / 2)) * 50;
+            const hy = 50 + (y / (rect.height / 2)) * 50;
+            holoBadge.style.setProperty('--hx', `${hx}%`);
+            holoBadge.style.setProperty('--hy', `${hy}%`);
         });
 
-        // Hover states no cursor para dar feedback de peso
-        buttons.forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
-                cursor.style.background = 'var(--accent-olive)';
-                follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                follower.style.borderColor = 'var(--accent-olive)';
-            });
-            btn.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursor.style.background = 'var(--accent-bronze)';
-                follower.style.transform = 'translate(-50%, -50%) scale(1)';
-                follower.style.borderColor = 'var(--accent-bronze)';
-            });
+        container.addEventListener('mouseleave', () => {
+            ticket.style.transform = 'rotateX(0deg) rotateY(0deg)';
         });
 
-        // A MÁGICA: Evitar a recusa com psicologia sutil e micro-interação elegante
-        const btnDecline = document.getElementById('btn-decline');
+        // Eventos e Lógica do Fluxo "Irrecusável"
         const btnAccept = document.getElementById('btn-accept');
-        let attempts = 0;
-
-        const dynamicTexts = [
-            "Tem certeza?",
-            "Acústica ruim lá...",
-            "Opção temporariamente indisponível.",
-            "Erro 418: Sistema prefere café.",
-            "Tente o outro botão."
-        ];
-
-        btnDecline.addEventListener('mouseover', () => {
-            if (attempts < dynamicTexts.length) {
-                // Em vez de "correr" de forma boba, o botão de declínio elegantemente 
-                // se autodeprecia e esmaece, enquanto o botão principal pulsa.
-                btnDecline.textContent = dynamicTexts[attempts];
-                btnDecline.style.opacity = (1 - (attempts * 0.2)); // Vai sumindo gradualmente
-                
-                // Fortalece o botão de aceitar
-                btnAccept.style.transform = `scale(${1 + (attempts * 0.05)})`;
-                btnAccept.style.boxShadow = `0 10px 30px rgba(197, 168, 128, ${0.25 + (attempts * 0.1)})`;
-                
-                attempts++;
-            } else {
-                // Se ele persistir, o botão de recusa simplesmente some, impossibilitando a ação
-                btnDecline.style.display = 'none';
-            }
-        });
-
-        // Evento de Sucesso
+        const btnVarTrigger = document.getElementById('btn-trigger-var');
+        const varModal = document.getElementById('var-modal');
+        const btnVarConfirm = document.getElementById('btn-var-confirm');
         const successScreen = document.getElementById('success-screen');
+
+        // Fluxo Sucesso Direto
         btnAccept.addEventListener('click', () => {
             successScreen.classList.add('active');
+        });
+
+        // Acionar o VAR simulado
+        btnVarTrigger.addEventListener('click', () => {
+            varModal.classList.add('active');
+        });
+
+        // Botão de Confirmação de Dentro do VAR
+        btnVarConfirm.addEventListener('click', () => {
+            varModal.classList.remove('active');
+            setTimeout(() => {
+                successScreen.classList.add('active');
+            }, 300);
         });
     </script>
 </body>
