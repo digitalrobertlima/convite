@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CONVOCAÇÃO VIP • CAIO</title>
+    <title>CONVITE DA RESENHA • CAIO</title>
     <!-- Fontes Brutalistas e Monospace de Alto Impacto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,7 +71,7 @@
             margin: auto 0;
             display: flex;
             justify-content: center;
-            touch-action: none; /* Previne scroll padrão enquanto interage com o ingresso */
+            touch-action: none;
         }
 
         /* Card de Ingresso Mobile-First (Vertical Estilo Apple Wallet) */
@@ -192,7 +192,7 @@
             -webkit-text-stroke: 1px var(--text-light);
         }
 
-        /* Grid de Informações Táticas */
+        /* Grid de Informações Táticas Simplificadas e Diretas */
         .ticket-meta-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -322,7 +322,7 @@
 
         .btn {
             width: 100%;
-            min-height: 52px; /* Altura padrão Apple de toque confortável */
+            min-height: 52px; /* Altura confortável para toques rápidos na mesa */
             font-family: var(--font-brutal);
             font-size: 0.75rem;
             font-weight: 700;
@@ -433,7 +433,7 @@
         }
 
         .var-target::before {
-            content: 'LANCE CRÍTICO';
+            content: 'LANCE POLÊMICO';
             position: absolute;
             top: -20px;
             left: 50%;
@@ -537,22 +537,23 @@
             <!-- Parte de Cima (Ticket Corpo) -->
             <div class="ticket-main">
                 <div class="ticket-header">
-                    <div class="brand-badge">R-SYSTEM VIP</div>
-                    <div class="ticket-type">CONVOCAÇÃO OFICIAL</div>
+                    <div class="brand-badge">ROLÉ &amp; RESENHA</div>
+                    <div class="ticket-type">CONVOCAÇÃO RÁPIDA</div>
                 </div>
 
                 <div class="ticket-title">
-                    <h1>Sócio Especial <span>Caio</span></h1>
+                    <h1>O Camisa 10 <span>Caio</span></h1>
                 </div>
 
+                <!-- Nova abordagem direta e divertida de pauta de conversa -->
                 <div class="ticket-meta-grid">
                     <div class="meta-item">
-                        <span class="meta-label">SETOR</span>
-                        <span class="meta-value gold">CAMAROTE PREMIUM</span>
+                        <span class="meta-label">SEU PRÓXIMO PASSO</span>
+                        <span class="meta-value gold">CONFIRMAR O ROLÉ</span>
                     </div>
                     <div class="meta-item">
-                        <span class="meta-label">PORTÃO</span>
-                        <span class="meta-value">LIBERADO</span>
+                        <span class="meta-label">INSTRUÇÃO</span>
+                        <span class="meta-value">OLHE PRA MIM E SORRIA</span>
                     </div>
                 </div>
             </div>
@@ -560,7 +561,7 @@
             <!-- Parte de Baixo (Stub / Canhoto) -->
             <div class="ticket-stub">
                 <div class="holo-shield" id="holo-badge">
-                    <span class="holo-logo">VIP</span>
+                    <span class="holo-logo">BORA</span>
                 </div>
                 
                 <div class="barcode-container">
@@ -574,34 +575,34 @@
 
     <!-- Controles de Ação Traseira para Polegar -->
     <div class="controls-container">
-        <button class="btn btn-confirm" id="btn-accept">Confirmar Escalação</button>
-        <button class="btn btn-var" id="btn-trigger-var">Pedir VAR</button>
+        <button class="btn btn-confirm" id="btn-accept">Bora, tô dentro!</button>
+        <button class="btn btn-var" id="btn-trigger-var">Pedir VAR (Duvidar?)</button>
     </div>
 
-    <!-- VAR Interface Modal -->
+    <!-- VAR Interface Modal de brincadeira tática sem intimidação -->
     <div class="var-overlay" id="var-modal">
         <div class="var-box">
             <div class="var-screen">
                 <div class="var-tactical-lines"></div>
                 <div class="var-target"></div>
             </div>
-            <div class="var-status">REVISANDO JOGADA...</div>
+            <div class="var-status">ANALISANDO LANCE...</div>
             <div class="var-desc">
-                Análise tática concluída. O comitê de arbitragem identificou que recusar uma boa resenha pós-jogo viola a regra 1 da arquibancada: <strong>"Papo reto não se evita."</strong>
+                O juiz de campo foi na cabine olhar a imagem e o veredito é unânime: <strong>recusar um papo cara a cara estando no mesmo almoço dá cartão vermelho direto!</strong> Sem desculpas táticas. Vamos nessa?
             </div>
-            <button class="btn btn-confirm" id="btn-var-confirm">Anular Recusa & Confirmar</button>
+            <button class="btn btn-confirm" id="btn-var-confirm">Anular Cartão &amp; Confirmar!</button>
         </div>
     </div>
 
-    <!-- Tela Final de Sucesso -->
+    <!-- Tela Final de Sucesso de fechamento na hora -->
     <div class="success-overlay" id="success-screen">
         <div class="success-card">
-            <div class="success-badge">INGRESSO VALIDADO</div>
-            <h2>Escalação <span>Confirmada!</span></h2>
+            <div class="success-badge">ENCONTRO ACERTADO</div>
+            <h2>Fechado <span>sem desculpas!</span></h2>
             <p>
-                A convocação foi aceita com sucesso. O fluxo tático foi atualizado. Nosso próximo pós-expediente está reservado. Vou organizar os detalhes técnicos para termos uma resenha impecável. Nos vemos lá!
+                Pronto! A convocação foi aceita com sucesso. Como você confirmou aqui na minha frente, o aperto de mão virtual está registrado. Já pode olhar de volta para mim para acertarmos o combinado do nosso rolê. 🤝
             </p>
-            <div class="brand-badge" style="display: inline-block;">NÃO É APENAS JOGO. É RITUAL.</div>
+            <div class="brand-badge" style="display: inline-block;">O ACORDO FOI SELADO NA MESA.</div>
         </div>
     </div>
 
