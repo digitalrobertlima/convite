@@ -2,24 +2,25 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CONVOCAÇÃO VIP • CAIO</title>
     <!-- Fontes Brutalistas e Monospace de Alto Impacto -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesque:wght@400;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesque:wght@400;500;700&family=Syncopate:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #070708;
-            --card-black: #121214;
-            --card-border: #27272a;
-            --galo-gold: #FFC72C; /* Amarelo Ouro Oficial do Galo */
-            --glow-gold: rgba(255, 199, 44, 0.35);
-            --text-light: #f4f4f5;
-            --text-muted: #71717a;
+            --bg-dark: #0a0a0c;
+            --card-black: #131316;
+            --card-border: #242429;
+            --galo-gold: #FFC72C; /* Amarelo Ouro Oficial */
+            --glow-gold: rgba(255, 199, 44, 0.4);
+            --text-light: #f4f4f7;
+            --text-muted: #7e7e8a;
             --font-brutal: 'Syncopate', sans-serif;
             --font-tech: 'Space Grotesque', sans-serif;
+            --safe-bottom: env(safe-area-inset-bottom, 20px);
         }
 
         * {
@@ -27,6 +28,8 @@
             margin: 0;
             padding: 0;
             user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -34,96 +37,99 @@
             color: var(--text-light);
             font-family: var(--font-tech);
             min-height: 100vh;
+            min-height: -webkit-fill-available;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 50% -20%, rgba(255, 199, 44, 0.12) 0%, transparent 60%),
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            padding: 20px;
+                radial-gradient(circle at 50% -10%, rgba(255, 199, 44, 0.15) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+            padding: 16px;
+            padding-bottom: calc(16px + var(--safe-bottom));
         }
 
-        /* Scanline / Grid overlay para textura de estádio */
+        /* Overlay tático de tela de transmissão de estádio */
         body::before {
             content: " ";
             display: block;
             position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
             z-index: 999;
             background-size: 100% 4px, 6px 100%;
             pointer-events: none;
         }
 
-        /* Container 3D para o Ticket */
         .perspective-container {
-            perspective: 1200px;
+            perspective: 1000px;
             width: 100%;
-            max-width: 850px;
+            max-width: 360px;
+            margin: auto 0;
             display: flex;
             justify-content: center;
-            z-index: 10;
+            touch-action: none; /* Previne scroll padrão enquanto interage com o ingresso */
         }
 
-        /* Estrutura do Ingresso VIP */
+        /* Card de Ingresso Mobile-First (Vertical Estilo Apple Wallet) */
         .ticket-card {
             width: 100%;
             background: var(--card-black);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            display: grid;
-            grid-template-columns: 2.2fr 1fr;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 199, 44, 0.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 199, 44, 0.03);
             transform-style: preserve-3d;
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease;
             position: relative;
+            aspect-ratio: 1 / 1.55; /* Proporção perfeita de cartão físico */
         }
 
+        /* Brilho interativo dinâmico que reage ao toque */
         .ticket-card::after {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 16px;
-            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 199, 44, 0.08) 0%, transparent 60%);
+            border-radius: 20px;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 199, 44, 0.12) 0%, transparent 60%);
             pointer-events: none;
             z-index: 3;
         }
 
-        /* Divisória Serrilhada de Bilheteria Real */
-        .ticket-divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 68.7%;
-            width: 2px;
-            background-image: linear-gradient(to bottom, var(--card-border) 60%, transparent 40%);
-            background-size: 2px 15px;
-            z-index: 4;
-        }
-
-        .ticket-divider::before, .ticket-divider::after {
-            content: '';
+        /* Cortes laterais e picote horizontal estilo canhoto de bilheteria */
+        .notch-left, .notch-right {
             position: absolute;
             width: 24px;
             height: 24px;
             background: var(--bg-dark);
             border: 1px solid var(--card-border);
             border-radius: 50%;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 72%;
             z-index: 5;
         }
 
-        .ticket-divider::before { top: -13px; }
-        .ticket-divider::after { bottom: -13px; }
+        .notch-left { left: -13px; }
+        .notch-right { right: -13px; }
 
-        /* Lado Esquerdo - Corpo Principal */
+        .dashed-line {
+            position: absolute;
+            top: calc(72% + 11px);
+            left: 15px;
+            right: 15px;
+            height: 1px;
+            border-top: 1px dashed var(--card-border);
+            z-index: 4;
+        }
+
+        /* Corpo Superior do Ticket (72% da Altura) */
         .ticket-main {
-            padding: 40px;
+            height: 72%;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -134,49 +140,48 @@
         .ticket-header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
+            align-items: center;
         }
 
         .brand-badge {
             font-family: var(--font-brutal);
-            font-size: 0.7rem;
-            letter-spacing: 4px;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
             color: var(--text-light);
-            background: #1a1a1e;
-            padding: 6px 12px;
+            background: #19191d;
+            padding: 5px 10px;
             border-radius: 4px;
-            border: 1px solid #2e2e33;
+            border: 1px solid #2d2d34;
         }
 
         .ticket-type {
             font-family: var(--font-brutal);
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
             color: var(--galo-gold);
-            text-shadow: 0 0 10px var(--glow-gold);
+            text-shadow: 0 0 8px var(--glow-gold);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
         .ticket-type::before {
             content: '';
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             background: var(--galo-gold);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--galo-gold);
+            box-shadow: 0 0 6px var(--galo-gold);
         }
 
         .ticket-title {
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .ticket-title h1 {
             font-family: var(--font-brutal);
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            line-height: 1.05;
+            font-size: 1.8rem;
+            line-height: 1.1;
             color: var(--text-light);
             text-transform: uppercase;
         }
@@ -187,30 +192,30 @@
             -webkit-text-stroke: 1px var(--text-light);
         }
 
+        /* Grid de Informações Táticas */
         .ticket-meta-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 25px;
-            margin-top: 20px;
+            padding-top: 20px;
         }
 
         .meta-item {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
 
         .meta-label {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--text-muted);
         }
 
         .meta-value {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--text-light);
         }
@@ -219,23 +224,22 @@
             color: var(--galo-gold);
         }
 
-        /* Lado Direito - Stub / Bilhete de Validação */
+        /* Corpo Inferior / Canhoto (28% da Altura) */
         .ticket-stub {
-            background: #151518;
-            padding: 40px 30px;
+            height: 28%;
+            background: #161619;
+            padding: 16px 24px;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            text-align: center;
             position: relative;
             z-index: 2;
         }
 
-        /* Elemento Holográfico de Segurança */
+        /* Selo Holográfico Redondo */
         .holo-shield {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #111 0%, #222 50%, #111 100%);
             border: 1px solid var(--card-border);
             border-radius: 50%;
@@ -244,141 +248,124 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
         }
 
+        /* Sheen de reflexão holográfica no celular */
         .holo-shield::after {
             content: '';
             position: absolute;
             inset: 0;
             background: linear-gradient(135deg, 
-                rgba(255, 199, 44, 0) 20%, 
-                rgba(255, 199, 44, 0.4) 40%, 
-                rgba(255, 255, 255, 0.2) 50%, 
-                rgba(255, 199, 44, 0) 70%
+                rgba(255, 199, 44, 0) 10%, 
+                rgba(255, 199, 44, 0.5) 40%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                rgba(255, 199, 44, 0) 60%
             );
             background-size: 200% 200%;
             background-position: var(--hx, 50%) var(--hy, 50%);
             mix-blend-mode: color-dodge;
             pointer-events: none;
-            transition: background-position 0.1s ease;
+            transition: background-position 0.15s ease-out;
         }
 
         .holo-logo {
             font-family: var(--font-brutal);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: var(--text-light);
             z-index: 2;
             letter-spacing: -1px;
         }
 
+        /* Código de Barras Premium */
         .barcode-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
+            align-items: flex-end;
+            gap: 4px;
         }
 
         .barcode {
-            width: 120px;
-            height: 50px;
-            opacity: 0.85;
+            width: 100px;
+            height: 36px;
+            opacity: 0.8;
             background: repeating-linear-gradient(
                 90deg,
                 var(--text-light),
                 var(--text-light) 2px,
                 transparent 2px,
-                transparent 6px,
-                var(--text-light) 6px,
-                var(--text-light) 10px,
-                transparent 10px,
-                transparent 12px
+                transparent 5px,
+                var(--text-light) 5px,
+                var(--text-light) 8px,
+                transparent 8px,
+                transparent 10px
             );
         }
 
         .barcode-num {
             font-family: monospace;
-            font-size: 0.65rem;
-            letter-spacing: 3px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
             color: var(--text-muted);
         }
 
-        /* Painel de Controle e Botões Brutalistas */
+        /* Painel de Ação Móvel (Ergonomia de Toque) */
         .controls-container {
             width: 100%;
-            max-width: 850px;
-            margin-top: 30px;
+            max-width: 360px;
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            gap: 12px;
             z-index: 10;
+            margin-top: 24px;
         }
 
         .btn {
-            flex: 1;
-            padding: 20px;
+            width: 100%;
+            min-height: 52px; /* Altura padrão Apple de toque confortável */
             font-family: var(--font-brutal);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             border: 1px solid var(--card-border);
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            outline: none;
         }
 
-        /* Botão Confirmar (Amarelo / Preto) */
+        /* Botão Confirmar (Ação Principal) */
         .btn-confirm {
             background: var(--text-light);
             color: var(--bg-dark);
             border-color: var(--text-light);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
         }
 
-        .btn-confirm::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .btn-confirm:hover {
+        .btn-confirm:active {
             background: var(--galo-gold);
             border-color: var(--galo-gold);
-            color: var(--bg-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px var(--glow-gold);
+            transform: scale(0.98);
         }
 
-        .btn-confirm:hover::after {
-            left: 100%;
-        }
-
-        /* Botão VAR (Recusar) */
+        /* Botão VAR (Ação de Recusa) */
         .btn-var {
             background: transparent;
             color: var(--text-muted);
             border-color: var(--card-border);
         }
 
-        .btn-var:hover {
+        .btn-var:active {
             color: #ef4444;
             border-color: rgba(239, 68, 68, 0.4);
-            background: rgba(239, 68, 68, 0.03);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+            background: rgba(239, 68, 68, 0.05);
         }
 
-        /* VAR OVERLAY (Simulação de Revisão de Campo) */
+        /* Interface de VAR Mobile-First */
         .var-overlay {
             position: fixed;
             inset: 0;
@@ -390,7 +377,8 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.4s ease;
+            padding: 20px;
         }
 
         .var-overlay.active {
@@ -399,26 +387,24 @@
         }
 
         .var-box {
-            border: 2px solid var(--galo-gold);
-            background: #0f0f11;
-            padding: 40px;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
+            border: 1.5px solid var(--galo-gold);
+            background: #0f0f12;
+            padding: 24px;
+            border-radius: 16px;
+            max-width: 340px;
+            width: 100%;
             text-align: center;
-            box-shadow: 0 0 50px var(--glow-gold);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 0 40px var(--glow-gold);
         }
 
-        /* Grid de Câmera de Linhas Táticas */
+        /* Tela de câmera tática compacta para celular */
         .var-screen {
             position: relative;
-            background: #16161a;
-            border: 1px solid #2e2e33;
-            aspect-ratio: 16/9;
-            margin-bottom: 25px;
-            border-radius: 6px;
+            background: #151518;
+            border: 1px solid #292930;
+            aspect-ratio: 16 / 10;
+            margin-bottom: 20px;
+            border-radius: 8px;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -429,33 +415,33 @@
             position: absolute;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(255, 199, 44, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 199, 44, 0.3) 1px, transparent 1px);
-            background-size: 30px 30px;
+                linear-gradient(rgba(255, 199, 44, 0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 199, 44, 0.25) 1px, transparent 1px);
+            background-size: 24px 24px;
             background-position: center;
             transform: rotateX(45deg);
-            opacity: 0.2;
+            opacity: 0.15;
         }
 
         .var-target {
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border: 2px dashed #ef4444;
             border-radius: 50%;
             position: relative;
-            animation: rotateTarget 10s linear infinite;
+            animation: rotateTarget 8s linear infinite;
         }
 
         .var-target::before {
             content: 'LANCE CRÍTICO';
             position: absolute;
-            top: -25px;
+            top: -20px;
             left: 50%;
             transform: translateX(-50%);
             font-family: var(--font-tech);
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             color: #ef4444;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             white-space: nowrap;
         }
 
@@ -465,20 +451,20 @@
 
         .var-status {
             font-family: var(--font-brutal);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: var(--galo-gold);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+            margin-bottom: 8px;
+            letter-spacing: 1.5px;
         }
 
         .var-desc {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 25px;
+            line-height: 1.5;
+            margin-bottom: 20px;
         }
 
-        /* Tela de Confirmação Final de Sucesso */
+        /* Tela Final de Sucesso Mobile-First */
         .success-overlay {
             position: fixed;
             inset: 0;
@@ -490,7 +476,8 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 24px;
         }
 
         .success-overlay.active {
@@ -500,29 +487,28 @@
 
         .success-card {
             text-align: center;
-            max-width: 600px;
-            padding: 40px;
+            max-width: 340px;
         }
 
         .success-badge {
             font-family: var(--font-brutal);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 6px 14px;
             border-radius: 99px;
             display: inline-block;
-            margin-bottom: 30px;
-            letter-spacing: 3px;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
         }
 
         .success-card h2 {
             font-family: var(--font-brutal);
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: 2rem;
             line-height: 1.1;
             color: var(--text-light);
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .success-card h2 span {
@@ -531,41 +517,28 @@
 
         .success-card p {
             color: var(--text-muted);
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin-bottom: 40px;
-        }
-
-        /* Responsividade Extrema */
-        @media (max-width: 768px) {
-            .ticket-card {
-                grid-template-columns: 1fr;
-            }
-            .ticket-divider {
-                display: none;
-            }
-            .ticket-stub {
-                border-top: 1px dashed var(--card-border);
-                padding: 30px;
-            }
-            .controls-container {
-                flex-direction: column;
-                gap: 12px;
-            }
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 <body>
 
-    <div class="perspective-container">
-        <!-- Ticket Premium -->
+    <!-- Container 3D para o Ticket Vertical -->
+    <div class="perspective-container" id="interaction-zone">
         <div class="ticket-card" id="ticket">
             
-            <!-- Corpo Principal -->
+            <!-- Cortes Físicos de Bilheteria -->
+            <div class="notch-left"></div>
+            <div class="notch-right"></div>
+            <div class="dashed-line"></div>
+            
+            <!-- Parte de Cima (Ticket Corpo) -->
             <div class="ticket-main">
                 <div class="ticket-header">
-                    <div class="brand-badge">R-SYSTEM DE ANTENAS</div>
-                    <div class="ticket-type">CONVOCAÇÃO EXTRAORDINÁRIA</div>
+                    <div class="brand-badge">R-SYSTEM VIP</div>
+                    <div class="ticket-type">CONVOCAÇÃO OFICIAL</div>
                 </div>
 
                 <div class="ticket-title">
@@ -575,11 +548,7 @@
                 <div class="ticket-meta-grid">
                     <div class="meta-item">
                         <span class="meta-label">SETOR</span>
-                        <span class="meta-value gold">CAMAROTE / RESENHA</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">CÓDIGO</span>
-                        <span class="meta-value">#GALO-013-VIP</span>
+                        <span class="meta-value gold">CAMAROTE PREMIUM</span>
                     </div>
                     <div class="meta-item">
                         <span class="meta-label">PORTÃO</span>
@@ -588,10 +557,7 @@
                 </div>
             </div>
 
-            <!-- Divisória Física Serrilhada -->
-            <div class="ticket-divider"></div>
-
-            <!-- Stub / Canhoto -->
+            <!-- Parte de Baixo (Stub / Canhoto) -->
             <div class="ticket-stub">
                 <div class="holo-shield" id="holo-badge">
                     <span class="holo-logo">VIP</span>
@@ -606,7 +572,7 @@
         </div>
     </div>
 
-    <!-- Botões Interativos -->
+    <!-- Controles de Ação Traseira para Polegar -->
     <div class="controls-container">
         <button class="btn btn-confirm" id="btn-accept">Confirmar Escalação</button>
         <button class="btn btn-var" id="btn-trigger-var">Pedir VAR</button>
@@ -621,19 +587,19 @@
             </div>
             <div class="var-status">REVISANDO JOGADA...</div>
             <div class="var-desc">
-                Análise tática em andamento. O comitê de arbitragem identificou que recusar uma resenha pós-jogo viola a regra número 1 do manual da arquibancada: <strong>"Papo bom não se evita."</strong>
+                Análise tática concluída. O comitê de arbitragem identificou que recusar uma boa resenha pós-jogo viola a regra 1 da arquibancada: <strong>"Papo reto não se evita."</strong>
             </div>
-            <button class="btn btn-confirm" id="btn-var-confirm" style="width: 100%;">Anular Recusa & Confirmar</button>
+            <button class="btn btn-confirm" id="btn-var-confirm">Anular Recusa & Confirmar</button>
         </div>
     </div>
 
-    <!-- Tela Final de Sucesso (VIP Room Match) -->
+    <!-- Tela Final de Sucesso -->
     <div class="success-overlay" id="success-screen">
         <div class="success-card">
-            <div class="success-badge">INGRESSO EMITIDO</div>
+            <div class="success-badge">INGRESSO VALIDADO</div>
             <h2>Escalação <span>Confirmada!</span></h2>
             <p>
-                A convocação foi aceita. O fluxo estratégico foi atualizado. Nosso próximo pós-expediente está agendado e reservado. Vou organizar os detalhes técnicos para que seja uma resenha de gala. Nos vemos lá.
+                A convocação foi aceita com sucesso. O fluxo tático foi atualizado. Nosso próximo pós-expediente está reservado. Vou organizar os detalhes técnicos para termos uma resenha impecável. Nos vemos lá!
             </p>
             <div class="brand-badge" style="display: inline-block;">NÃO É APENAS JOGO. É RITUAL.</div>
         </div>
@@ -641,48 +607,66 @@
 
     <script>
         const ticket = document.getElementById('ticket');
-        const container = document.querySelector('.perspective-container');
+        const interactionZone = document.getElementById('interaction-zone');
         const holoBadge = document.getElementById('holo-badge');
 
-        // Efeito de Rotação 3D do Ticket Dinâmico (Efeito Parallax Física Real)
-        container.addEventListener('mousemove', (e) => {
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left - (rect.width / 2);
-            const y = e.clientY - rect.top - (rect.height / 2);
+        // Mecanismo Unificado de Toque/Pointer para Celular
+        const handleInteraction = (clientX, clientY) => {
+            const rect = interactionZone.getBoundingClientRect();
             
-            const rotateX = -(y / (rect.height / 2)) * 14; 
-            const rotateY = (x / (rect.width / 2)) * 14;
+            // Posição relativa em relação ao centro do ticket
+            const x = clientX - rect.left - (rect.width / 2);
+            const y = clientY - rect.top - (rect.height / 2);
+            
+            // Ângulos de rotação 3D mais suaves e responsivos para telas de celulares
+            const rotateX = -(y / (rect.height / 2)) * 16; 
+            const rotateY = (x / (rect.width / 2)) * 16;
 
             ticket.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             
-            // Variáveis CSS de coordenadas do mouse para o background shimmer
-            ticket.style.setProperty('--mx', `${(e.clientX - rect.left)}px`);
-            ticket.style.setProperty('--my', `${(e.clientY - rect.top)}px`);
+            // Variáveis CSS atualizadas em tempo real para o efeito de iluminação do cartão
+            const mx = clientX - rect.left;
+            const my = clientY - rect.top;
+            ticket.style.setProperty('--mx', `${mx}px`);
+            ticket.style.setProperty('--my', `${my}px`);
 
-            // Mover o reflexo holográfico
+            // Mover o gradiente metálico dentro do distintivo holográfico circular
             const hx = 50 + (x / (rect.width / 2)) * 50;
             const hy = 50 + (y / (rect.height / 2)) * 50;
             holoBadge.style.setProperty('--hx', `${hx}%`);
             holoBadge.style.setProperty('--hy', `${hy}%`);
+        };
+
+        // Eventos de Toque (PointerEvents abrange Toques de Dedos e Cliques de Mouse de forma híbrida)
+        interactionZone.addEventListener('pointermove', (e) => {
+            handleInteraction(e.clientX, e.clientY);
         });
 
-        container.addEventListener('mouseleave', () => {
+        // Suavização do retorno ao ponto neutro quando o usuário solta o dedo
+        const resetCard = () => {
             ticket.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
+            ticket.style.setProperty('--mx', '50%');
+            ticket.style.setProperty('--my', '50%');
+            holoBadge.style.setProperty('--hx', '50%');
+            holoBadge.style.setProperty('--hy', '50%');
+        };
 
-        // Eventos e Lógica do Fluxo "Irrecusável"
+        interactionZone.addEventListener('pointerleave', resetCard);
+        interactionZone.addEventListener('pointerup', resetCard);
+
+        // Lógica do Fluxo de Decisões e Modais
         const btnAccept = document.getElementById('btn-accept');
         const btnVarTrigger = document.getElementById('btn-trigger-var');
         const varModal = document.getElementById('var-modal');
         const btnVarConfirm = document.getElementById('btn-var-confirm');
         const successScreen = document.getElementById('success-screen');
 
-        // Fluxo Sucesso Direto
+        // Fluxo de Confirmação Direta
         btnAccept.addEventListener('click', () => {
             successScreen.classList.add('active');
         });
 
-        // Acionar o VAR simulado
+        // Chamar o VAR simulado
         btnVarTrigger.addEventListener('click', () => {
             varModal.classList.add('active');
         });
